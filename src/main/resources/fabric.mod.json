@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "textureexportmod",
+	"version": "${version}",
+	"name": "TextureExportMod",
+	"description": "Mod to export all textures from blocks as they are rendered in game",
+	"authors": [
+		"jasger9000 | jasger_"
+	],
+	"contact": {
+		"homepage": "https://github.com/jasger9000/TextureExportMod",
+		"sources": "https://github.com/jasger9000/TextureExportMod/releases"
+	},
+	"license": "MIT",
+	"icon": "assets/textureexportmod/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.github.jasger9000.textureexportmod.TextureExportMod"
+		],
+		"client": [
+			"com.github.jasger9000.textureexportmod.TextureExportModClient"
+		]
+	},
+	"mixins": [
+		"textureexportmod.mixins.json",
+		{
+			"config": "textureexportmod.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.15.11",
+		"minecraft": "~1.21",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+	}
+}

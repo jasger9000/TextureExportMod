@@ -1,0 +1,11 @@
+{
+	"required": true,
+	"package": "com.github.jasger9000.textureexportmod.mixin.client",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"ExampleClientMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
