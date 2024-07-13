@@ -1,6 +1,10 @@
 package com.github.jasger9000.textureexportmod;
 
+import com.mojang.brigadier.CommandDispatcher;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
+import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
@@ -41,7 +45,41 @@ public class TextureExportModClient implements ClientModInitializer {
 
 		});
 
+		ClientCommandRegistrationCallback.EVENT.register(this::onCommandRegistration);
 		HudRenderCallback.EVENT.register((context, tickDeltaManager) -> HudRenderEvent.onHudRender(items, framebuffer, context));
 	}
+
+	private void onCommandRegistration(CommandDispatcher<FabricClientCommandSource> dispatcher, CommandRegistryAccess registryAccess) {
+		dispatcher.register(ClientCommandManager.literal("buildItemStack").executes((context) -> {
+			LOGGER.info("Creating Item Stack");
+			context.getSource().sendFeedback(Text.literal("Building Stack of all registered Items"));
+			items.clear();
+			int length = 0;
+
+			for (Identifier id : Registries.ITEM.getIds()) {
+				LOGGER.debug("Adding item {}", id);
+				items.push(id);
+				++length;
+			}
+
+			context.getSource().sendFeedback(Text.literal("Finished Building Stack with " + length + " elements"));
+			LOGGER.info("Finished Building Stack");
+
+			return 0;
+		}));
+
+		dispatcher.register(ClientCommandManager.literal("startExport").executes(context -> {
+			LOGGER.info("Starting to export");
+			context.getSource().sendFeedback(Text.literal("Starting to export Textures"));
+			EXPORT = true;
+			return 0;
+		}));
+
+		dispatcher.register(ClientCommandManager.literal("stopExport").executes(context -> {
+			LOGGER.info("Stopping export");
+			context.getSource().sendFeedback(Text.literal("Stopping export"));
+			EXPORT = false;
+			return 0;
+		}));
 	}
 }
