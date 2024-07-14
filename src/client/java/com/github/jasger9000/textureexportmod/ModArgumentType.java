@@ -17,7 +17,7 @@ import static com.github.jasger9000.textureexportmod.TextureExportModClient.MODS
 
 public class ModArgumentType implements ArgumentType<Mod> {
     private static final Collection<String> EXAMPLES = Arrays.asList("minecraft", "create", "computercraft");
-    public static final SimpleCommandExceptionType NOT_IN_MODLIST = new SimpleCommandExceptionType(Text.of("Expected a mod id"));
+    public static final SimpleCommandExceptionType NOT_IN_MODLIST = new SimpleCommandExceptionType(Text.translatable("argument.mod.not_in_list"));
 
     public static Mod getMod(final CommandContext<?> context, final String name) {
         return context.getArgument(name, Mod.class);

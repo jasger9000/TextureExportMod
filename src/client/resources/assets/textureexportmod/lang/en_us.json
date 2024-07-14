@@ -1,0 +1,16 @@
+{
+    "gui.textureexportmod.select_all": "Select all",
+    "gui.textureexportmod.mod_entry": "%s (%s)",
+    "gui.textureexportmod.screen_name": "TextureExportMod Control Panel",
+    "gui.textureexportmod.mods_to_export": "Mods to export",
+    "commands.textureexport.build": "Building Item stack with all enabled mods",
+    "commands.textureexport.finish_build": "Finished Building Stack with %d elements from %d mod(s)",
+    "commands.textureexport.stack_empty": "The item stack is empty, you need to build it first",
+    "commands.textureexport.stack_dirty": "You are starting the export with a dirty item stack, you should probably rebuild it",
+    "commands.textureexport.start": "Starting to export textures",
+    "commands.textureexport.stop": "Stopping texture export",
+    "commands.textureexport.finish": "Finished exporting textures",
+    "commands.textureexport.should_export": "%s will now be exported",
+    "commands.textureexport.should_not_export": "%s will no longer be exported",
+    "argument.mod.not_in_list": "Expected a valid mod id"
+}

@@ -78,23 +78,23 @@ public class TextureExportModClient implements ClientModInitializer {
 
 	private void onCommandRegistration(CommandDispatcher<FabricClientCommandSource> dispatcher, CommandRegistryAccess registryAccess) {
 		dispatcher.register(ClientCommandManager.literal("buildItemStack").executes((context) -> {
-			context.getSource().sendFeedback(Text.literal("Building Item stack with all enabled mods"));
-			int mods = buildItemStack();
-			context.getSource().sendFeedback(Text.literal("Finished Building Stack with " + items.size() + " elements from " + mods + " mods"));
+			context.getSource().sendFeedback(Text.translatable("commands.textureexport.build"));
+			int mod_size = buildItemStack();
+			context.getSource().sendFeedback(Text.translatable("commands.textureexport.finish_build", items.size(), mod_size));
 
 			return 0;
 		}));
 
 		dispatcher.register(ClientCommandManager.literal("startExport").executes(context -> {
 			if (items.isEmpty()) {
-				context.getSource().sendError(Text.literal("The item stack is empty, you need to build it first"));
+				context.getSource().sendError(Text.translatable("commands.textureexport.stack_empty"));
 				return 1;
 			}
 			if (STACK_DIRTY) {
-				context.getSource().sendError(Text.literal("You are starting the export with a dirty item stack, you should probably rebuild it").withColor(Colors.YELLOW));
+				context.getSource().sendError(Text.translatable("commands.textureexport.stack_dirty").withColor(Colors.YELLOW));
 			}
 			LOGGER.info("Starting to export");
-			context.getSource().sendFeedback(Text.literal("Starting to export textures"));
+			context.getSource().sendFeedback(Text.translatable("commands.textureexport.start"));
 			SHOULD_EXPORT = true;
 			STACK_DIRTY = true;
 			return 0;
@@ -102,7 +102,7 @@ public class TextureExportModClient implements ClientModInitializer {
 
 		dispatcher.register(ClientCommandManager.literal("stopExport").executes(context -> {
 			LOGGER.info("Stopping export");
-			context.getSource().sendFeedback(Text.literal("Stopping export"));
+			context.getSource().sendFeedback(Text.translatable("commands.textureexport.stop"));
 			SHOULD_EXPORT = false;
 			return 0;
 		}));
@@ -115,7 +115,10 @@ public class TextureExportModClient implements ClientModInitializer {
 									Mod mod = ModArgumentType.getMod(context, "mod");
 
 									mod.export(shouldExport);
-									context.getSource().sendFeedback(Text.literal(mod.id() + " will " + (shouldExport ? "now" : "no longer") + " be export"));
+									context.getSource().sendFeedback(shouldExport ?
+											Text.translatable("commands.textureexport.should_export", mod.id()) :
+											Text.translatable("commands.textureexport.should_not_export", mod.id())
+									);
 									STACK_DIRTY = true;
 									return 0;
 								})

@@ -25,7 +25,7 @@ public class HudRenderEvent {
         if (SHOULD_EXPORT && items.isEmpty()) {
             LOGGER.info("Finished exporting textures");
             if (client.player != null) {
-                client.player.sendMessage(Text.literal("Finished exporting textures").withColor(Colors.GREEN));
+                client.player.sendMessage(Text.translatable("commands.textureexport.finish").withColor(Colors.GREEN));
             }
 
             SHOULD_EXPORT = false;
@@ -45,7 +45,7 @@ public class HudRenderEvent {
 
         Identifier id = items.pop();
 
-        LOGGER.info("Drawing item {}", id.getPath());
+        LOGGER.debug("Drawing item {}", id.getPath());
         drawItem(context, Registries.ITEM.get(id).getDefaultStack(), client.getFramebuffer());
 
         framebuffer.endWrite();
@@ -57,6 +57,9 @@ public class HudRenderEvent {
 
             screenshot.writeTo(path);
         } catch (IOException e) {
+            if (client.player != null) {
+                client.player.sendMessage(Text.translatable("screenshot.failure", e.getMessage()).withColor(Colors.LIGHT_RED));
+            }
             LOGGER.error("Failed to write screenshot.", e);
         }
     }
