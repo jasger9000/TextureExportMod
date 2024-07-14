@@ -26,7 +26,7 @@ import static com.github.jasger9000.textureexportmod.Util.createDirectory;
 public class TextureExportModClient implements ClientModInitializer {
 	public static final MinecraftClient client = MinecraftClient.getInstance();
 	public static final Path EXPORT_DIRECTORY = Path.of(System.getProperty("user.home"), "Pictures", MOD_ID);
-	public static boolean EXPORT = false;
+	public static boolean SHOULD_EXPORT = false;
 
 	public final Stack<Identifier> items = new Stack<>();
 	private Framebuffer framebuffer;
@@ -71,7 +71,7 @@ public class TextureExportModClient implements ClientModInitializer {
 		dispatcher.register(ClientCommandManager.literal("startExport").executes(context -> {
 			LOGGER.info("Starting to export");
 			context.getSource().sendFeedback(Text.literal("Starting to export Textures"));
-			EXPORT = true;
+			SHOULD_EXPORT = true;
 			return 0;
 		}));
 

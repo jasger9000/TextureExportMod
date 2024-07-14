@@ -7,6 +7,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.registry.Registries;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import java.io.IOException;
@@ -20,7 +21,15 @@ import static com.github.jasger9000.textureexportmod.Util.*;
 public class HudRenderEvent {
 
     public static void onHudRender(Stack<Identifier> items, Framebuffer framebuffer, DrawContext context) {
-        if (!EXPORT || items.isEmpty()) {
+        if (SHOULD_EXPORT && items.isEmpty()) {
+            LOGGER.info("Finished exporting textures");
+            if (client.player != null) {
+                client.player.sendMessage(Text.of("Finished exporting textures"));
+            }
+
+            SHOULD_EXPORT = false;
+            return;
+        } else if (!SHOULD_EXPORT) {
             return;
         }
 
