@@ -21,6 +21,17 @@ Redistribution, commercial use, or any other unauthorized use of the textures fr
     This is likely `%appdata%/.minecraft/mods` or `~/.minecraft/mods`
 
 
+## Usage
+
+This mod provides several client side commands:
+- `/buildItemStack` to build an Item Stack of all the mods you enabled for export
+- `/shouldExportMod <mod> <shouldExport>` Toggles whether the chosen mod will be exported.
+  - \<mod\> A Mod id. Example: `minecraft` or `create`
+  - \<shouldExport\> A boolean. Can be `true` or `false`
+- `/startExport` to begin exporting the current item stack
+- `/stopExport` to stop/pause the current export
+
+
 ## FAQ
 
 #### How do I export textures?
