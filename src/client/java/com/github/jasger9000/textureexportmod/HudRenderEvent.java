@@ -8,6 +8,7 @@ import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
+import net.minecraft.util.Colors;
 import net.minecraft.util.Identifier;
 
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class HudRenderEvent {
         if (SHOULD_EXPORT && items.isEmpty()) {
             LOGGER.info("Finished exporting textures");
             if (client.player != null) {
-                client.player.sendMessage(Text.of("Finished exporting textures"));
+                client.player.sendMessage(Text.literal("Finished exporting textures").withColor(Colors.GREEN));
             }
 
             SHOULD_EXPORT = false;
