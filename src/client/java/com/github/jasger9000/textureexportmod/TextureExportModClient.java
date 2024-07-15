@@ -35,9 +35,9 @@ public class TextureExportModClient implements ClientModInitializer {
 	public static final HashMap<String, Mod> MODS = new HashMap<>();
 	public static boolean SHOULD_EXPORT = false;
 	public static boolean STACK_DIRTY = true;
+	public static final Stack<Identifier> ITEMS = new Stack<>();
 
-	public final Stack<Identifier> items = new Stack<>();
-	private Framebuffer framebuffer;
+	public static Framebuffer FRAMEBUFFER;
 
 	@Override
 	public void onInitializeClient() {
@@ -67,26 +67,26 @@ public class TextureExportModClient implements ClientModInitializer {
 
 			// make new framebuffer to store our textures in
 			profiler.push("create frame buffer");
-			framebuffer = new SimpleFramebuffer(256, 256, true, MinecraftClient.IS_SYSTEM_MAC);
+			FRAMEBUFFER = new SimpleFramebuffer(256, 256, true, MinecraftClient.IS_SYSTEM_MAC);
 			profiler.pop();
 
 		});
 
 		ClientCommandRegistrationCallback.EVENT.register(this::onCommandRegistration);
-		HudRenderCallback.EVENT.register((context, tickDeltaManager) -> HudRenderEvent.onHudRender(items, framebuffer, context));
+		HudRenderCallback.EVENT.register(HudRenderEvent::onHudRender);
 	}
 
 	private void onCommandRegistration(CommandDispatcher<FabricClientCommandSource> dispatcher, CommandRegistryAccess registryAccess) {
 		dispatcher.register(ClientCommandManager.literal("buildItemStack").executes((context) -> {
 			context.getSource().sendFeedback(Text.translatable("commands.textureexport.build"));
 			int mod_size = buildItemStack();
-			context.getSource().sendFeedback(Text.translatable("commands.textureexport.finish_build", items.size(), mod_size));
+			context.getSource().sendFeedback(Text.translatable("commands.textureexport.finish_build", ITEMS.size(), mod_size));
 
 			return 0;
 		}));
 
 		dispatcher.register(ClientCommandManager.literal("startExport").executes(context -> {
-			if (items.isEmpty()) {
+			if (ITEMS.isEmpty()) {
 				context.getSource().sendError(Text.translatable("commands.textureexport.stack_empty"));
 				return 1;
 			}
@@ -128,16 +128,16 @@ public class TextureExportModClient implements ClientModInitializer {
 	}
 
 
-	public int buildItemStack() {
+	public static int buildItemStack() {
 		LOGGER.info("Creating Item Stack");
 
-		items.clear();
+		ITEMS.clear();
 		int mods = 0;
 		for (Mod mod : MODS.values()) {
 			if (mod.export()) {
 				for (Identifier item : mod.items()) {
-					LOGGER.debug("Adding item {}", items);
-					items.push(item);
+					LOGGER.debug("Adding item {}", ITEMS);
+					ITEMS.push(item);
 				}
 				++mods;
 			}
