@@ -9,11 +9,12 @@
 	],
 	"contact": {
 		"homepage": "https://github.com/jasger9000/TextureExportMod",
-		"sources": "https://github.com/jasger9000/TextureExportMod/releases"
+		"sources": "https://github.com/jasger9000/TextureExportMod",
+		"issues": "https://github.com/jasger9000/TextureExportMod/issues"
 	},
 	"license": "MIT",
 	"icon": "assets/textureexportmod/icon.png",
-	"environment": "*",
+	"environment": "client",
 	"entrypoints": {
 		"main": [
 			"com.github.jasger9000.textureexportmod.TextureExportMod"
