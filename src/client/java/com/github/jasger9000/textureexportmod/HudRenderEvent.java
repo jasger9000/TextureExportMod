@@ -1,5 +1,6 @@
 package com.github.jasger9000.textureexportmod;
 
+import com.github.jasger9000.textureexportmod.gui.ExportScreen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -23,7 +24,7 @@ public class HudRenderEvent {
     public static void onHudRender(DrawContext context, RenderTickCounter tickDeltaManager) {
         if (SHOULD_EXPORT && ITEMS.isEmpty()) {
             LOGGER.info("Finished exporting textures");
-            if (client.player != null) {
+            if (client.player != null && !(client.currentScreen instanceof ExportScreen)) {
                 client.player.sendMessage(Text.translatable("commands.textureexport.finish").withColor(Colors.GREEN));
             }
 
@@ -61,5 +62,7 @@ public class HudRenderEvent {
             }
             LOGGER.error("Failed to write screenshot.", e);
         }
+
+        ++EXPORTED_TEXTURES;
     }
 }

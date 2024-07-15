@@ -1,5 +1,6 @@
 package com.github.jasger9000.textureexportmod;
 
+import com.github.jasger9000.textureexportmod.gui.ExportScreen;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import net.fabricmc.api.ClientModInitializer;
@@ -35,6 +36,8 @@ public class TextureExportModClient implements ClientModInitializer {
 	public static final HashMap<String, Mod> MODS = new HashMap<>();
 	public static boolean SHOULD_EXPORT = false;
 	public static boolean STACK_DIRTY = true;
+	public static int EXPORTED_TEXTURES = 0;
+	public static int TOTAL_TEXTURES = 0;
 	public static final Stack<Identifier> ITEMS = new Stack<>();
 
 	public static Framebuffer FRAMEBUFFER;
@@ -123,6 +126,12 @@ public class TextureExportModClient implements ClientModInitializer {
 				)
 		);
 
+		dispatcher.register(ClientCommandManager.literal("openExportScreen").executes(context -> {
+			client.send(() -> client.setScreen(new ExportScreen()));
+			return 0;
+		}));
+	}
+
 
 	public static void startExport() {
 		LOGGER.info("Starting export");
@@ -150,6 +159,8 @@ public class TextureExportModClient implements ClientModInitializer {
 			}
 		}
 
+		EXPORTED_TEXTURES = 0;
+		TOTAL_TEXTURES = ITEMS.size();
 		STACK_DIRTY = false;
 		LOGGER.info("Finished Building Stack");
 
