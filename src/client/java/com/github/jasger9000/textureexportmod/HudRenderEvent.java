@@ -27,7 +27,7 @@ public class HudRenderEvent {
                 client.player.sendMessage(Text.translatable("commands.textureexport.finish").withColor(Colors.GREEN));
             }
 
-            SHOULD_EXPORT = false;
+            stopExport();
             return;
         } else if (!SHOULD_EXPORT) {
             return;

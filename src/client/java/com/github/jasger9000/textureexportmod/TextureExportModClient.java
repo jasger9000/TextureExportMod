@@ -93,17 +93,14 @@ public class TextureExportModClient implements ClientModInitializer {
 			if (STACK_DIRTY) {
 				context.getSource().sendError(Text.translatable("commands.textureexport.stack_dirty").withColor(Colors.YELLOW));
 			}
-			LOGGER.info("Starting to export");
 			context.getSource().sendFeedback(Text.translatable("commands.textureexport.start"));
-			SHOULD_EXPORT = true;
-			STACK_DIRTY = true;
+			startExport();
 			return 0;
 		}));
 
 		dispatcher.register(ClientCommandManager.literal("stopExport").executes(context -> {
-			LOGGER.info("Stopping export");
 			context.getSource().sendFeedback(Text.translatable("commands.textureexport.stop"));
-			SHOULD_EXPORT = false;
+			stopExport();
 			return 0;
 		}));
 
@@ -125,8 +122,18 @@ public class TextureExportModClient implements ClientModInitializer {
 						)
 				)
 		);
+
+
+	public static void startExport() {
+		LOGGER.info("Starting export");
+		STACK_DIRTY = true;
+		SHOULD_EXPORT = true;
 	}
 
+	public static void stopExport() {
+		LOGGER.info("Stopping export");
+		SHOULD_EXPORT = false;
+	}
 
 	public static int buildItemStack() {
 		LOGGER.info("Creating Item Stack");
