@@ -1,4 +1,4 @@
-package com.github.jasger9000.textureexportmod;
+package com.github.jasger9000.textureexportmod.util;
 
 import net.minecraft.util.Identifier;
 

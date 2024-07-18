@@ -6,7 +6,9 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.RenderTickCounter;
+import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.texture.NativeImage;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import net.minecraft.util.Colors;
@@ -17,7 +19,7 @@ import java.nio.file.Path;
 
 import static com.github.jasger9000.textureexportmod.TextureExportMod.LOGGER;
 import static com.github.jasger9000.textureexportmod.TextureExportModClient.*;
-import static com.github.jasger9000.textureexportmod.Util.*;
+import static com.github.jasger9000.textureexportmod.util.Util.*;
 
 public class HudRenderEvent {
 
@@ -46,7 +48,11 @@ public class HudRenderEvent {
         Identifier id = ITEMS.pop();
 
         LOGGER.debug("Drawing item {}", id.getPath());
-        drawItem(context, Registries.ITEM.get(id).getDefaultStack(), client.getFramebuffer());
+
+        ItemStack stack = Registries.ITEM.get(id).getDefaultStack();
+        BakedModel model = client.getItemRenderer().getModel(stack, null, null, 0);
+
+        drawItem(context, model, stack, client.getFramebuffer());
 
         FRAMEBUFFER.endWrite();
         client.getFramebuffer().beginWrite(true);

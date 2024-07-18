@@ -1,5 +1,6 @@
 package com.github.jasger9000.textureexportmod;
 
+import com.github.jasger9000.textureexportmod.util.Mod;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.context.CommandContext;

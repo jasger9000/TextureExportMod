@@ -1,6 +1,6 @@
 package com.github.jasger9000.textureexportmod.gui.widgets;
 
-import com.github.jasger9000.textureexportmod.Mod;
+import com.github.jasger9000.textureexportmod.util.Mod;
 import com.github.jasger9000.textureexportmod.mixin.client.CheckboxWidgetAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;

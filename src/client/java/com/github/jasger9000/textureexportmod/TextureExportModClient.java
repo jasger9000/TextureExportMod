@@ -1,6 +1,7 @@
 package com.github.jasger9000.textureexportmod;
 
 import com.github.jasger9000.textureexportmod.gui.ExportScreen;
+import com.github.jasger9000.textureexportmod.util.Mod;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import net.fabricmc.api.ClientModInitializer;
@@ -27,7 +28,7 @@ import java.util.Stack;
 
 import static com.github.jasger9000.textureexportmod.TextureExportMod.LOGGER;
 import static com.github.jasger9000.textureexportmod.TextureExportMod.MOD_ID;
-import static com.github.jasger9000.textureexportmod.Util.createDirectory;
+import static com.github.jasger9000.textureexportmod.util.Util.createDirectory;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
 
 public class TextureExportModClient implements ClientModInitializer {

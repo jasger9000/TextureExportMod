@@ -1,4 +1,4 @@
-package com.github.jasger9000.textureexportmod;
+package com.github.jasger9000.textureexportmod.util;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gl.Framebuffer;
@@ -21,14 +21,13 @@ import static com.github.jasger9000.textureexportmod.TextureExportMod.LOGGER;
 import static com.github.jasger9000.textureexportmod.TextureExportModClient.client;
 
 public class Util {
-    public static void drawItem(DrawContext context, ItemStack stack, Framebuffer mainBuffer) {
+    public static void drawItem(DrawContext context, BakedModel bakedModel, ItemStack stack, Framebuffer mainBuffer) {
         if (stack.isEmpty()) {
             return;
         }
 
         MatrixStack matrices = context.getMatrices();
 
-        BakedModel bakedModel = client.getItemRenderer().getModel(stack, null, null, 0);
         matrices.push();
 
         float size = context.getScaledWindowHeight(); // I don't know what black magic this does, but it works, DON'T TOUCH IT
