@@ -1,11 +1,12 @@
 {
-	"required": true,
-	"package": "com.github.jasger9000.textureexportmod.mixin.client",
-	"compatibilityLevel": "JAVA_21",
-	"client": [
-		"CheckboxWidgetAccessor"
-	],
-	"injectors": {
-		"defaultRequire": 1
+    "required": true,
+    "package": "com.github.jasger9000.textureexportmod.mixin.client",
+    "compatibilityLevel": "JAVA_21",
+    "client": [
+        "CheckboxWidgetAccessor",
+        "SpriteContentsMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
 	}
 }

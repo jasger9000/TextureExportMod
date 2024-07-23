@@ -1,6 +1,7 @@
 package com.github.jasger9000.textureexportmod;
 
 import com.github.jasger9000.textureexportmod.gui.ExportScreen;
+import com.github.jasger9000.textureexportmod.util.AnimatedItemContext;
 import com.github.jasger9000.textureexportmod.util.Mod;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
@@ -20,6 +21,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Colors;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
+import org.jetbrains.annotations.Nullable;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -39,6 +41,7 @@ public class TextureExportModClient implements ClientModInitializer {
 	public static boolean STACK_DIRTY = true;
 	public static int EXPORTED_TEXTURES = 0;
 	public static int TOTAL_TEXTURES = 0;
+	public static @Nullable AnimatedItemContext ANIMATED_ITEM_CONTEXT = null;
 	public static final Stack<Identifier> ITEMS = new Stack<>();
 
 	public static Framebuffer FRAMEBUFFER;

@@ -1,6 +1,7 @@
 package com.github.jasger9000.textureexportmod;
 
 import com.github.jasger9000.textureexportmod.gui.ExportScreen;
+import com.github.jasger9000.textureexportmod.util.AnimatedItemContext;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -45,12 +46,23 @@ public class HudRenderEvent {
         client.getFramebuffer().endWrite();
         FRAMEBUFFER.beginWrite(false);
 
-        Identifier id = ITEMS.pop();
+        Identifier id = ITEMS.peek();
 
         LOGGER.debug("Drawing item {}", id.getPath());
 
+        Path path;
+        BakedModel model;
         ItemStack stack = Registries.ITEM.get(id).getDefaultStack();
-        BakedModel model = client.getItemRenderer().getModel(stack, null, null, 0);
+
+        if (ANIMATED_ITEM_CONTEXT != null) {
+            path = EXPORT_DIRECTORY.resolve(Path.of(id.getNamespace(), id.getPath(), ANIMATED_ITEM_CONTEXT.getFrame() + ".png"));
+            model = ANIMATED_ITEM_CONTEXT.model;
+
+        } else {
+            path = EXPORT_DIRECTORY.resolve(Path.of(id.getNamespace(), id.getPath() + ".png"));
+            model = client.getItemRenderer().getModel(stack, null, null, 0);
+            ITEMS.pop();
+        }
 
         drawItem(context, model, stack, client.getFramebuffer());
 
@@ -58,7 +70,6 @@ public class HudRenderEvent {
         client.getFramebuffer().beginWrite(true);
 
         try (NativeImage screenshot = createNativeImage(FRAMEBUFFER)) {
-            Path path = EXPORT_DIRECTORY.resolve(Path.of(id.getNamespace(), id.getPath() + ".png"));
             createDirectory(path.getParent());
 
             screenshot.writeTo(path);
@@ -69,6 +80,29 @@ public class HudRenderEvent {
             LOGGER.error("Failed to write screenshot.", e);
         }
 
-        ++EXPORTED_TEXTURES;
+        if (ANIMATED_ITEM_CONTEXT != null) {
+            if (ANIMATED_ITEM_CONTEXT.getFrame() >= ANIMATED_ITEM_CONTEXT.frames - 1 && ANIMATED_ITEM_CONTEXT.wasSpriteUploaded()) {
+                ANIMATED_ITEM_CONTEXT = null;
+                ITEMS.pop();
+                ++EXPORTED_TEXTURES;
+            } else if (ANIMATED_ITEM_CONTEXT.wasSpriteUploaded()) {
+                ANIMATED_ITEM_CONTEXT.nextFrame();
+            }
+        } else {
+            ++EXPORTED_TEXTURES;
+        }
+
+
+        // peek if next item is animated and create AnimatedItemContext if it is
+        if (!ITEMS.isEmpty() && ANIMATED_ITEM_CONTEXT == null) {
+            id = ITEMS.peek();
+            stack = Registries.ITEM.get(id).getDefaultStack();
+            model = client.getItemRenderer().getModel(stack, null, null, 0);
+            int frames = getFrameCount(model);
+
+            if (frames > 1) {
+                ANIMATED_ITEM_CONTEXT = new AnimatedItemContext(frames, model);
+            }
+        }
     }
 }

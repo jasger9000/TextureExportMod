@@ -3,7 +3,7 @@
 	"id": "textureexportmod",
 	"version": "${version}",
 	"name": "TextureExportMod",
-	"description": "Mod to export all textures from blocks as they are rendered in game",
+	"description": "Mod to export all textures from items as they are rendered in game",
 	"authors": [
 		"jasger9000 | jasger_"
 	],
@@ -30,6 +30,7 @@
 			"environment": "client"
 		}
 	],
+	"accessWidener": "textureexportmod.accesswidener",
 	"depends": {
 		"fabricloader": ">=0.15.11",
 		"minecraft": "~1.21",

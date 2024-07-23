@@ -1,0 +1,10 @@
+accessWidener v2 named
+
+accessible class net/minecraft/client/texture/SpriteContents$Animation
+accessible class net/minecraft/client/texture/SpriteContents$AnimationFrame
+
+accessible method net/minecraft/client/texture/SpriteContents$Animation upload (III)V
+accessible method net/minecraft/client/texture/SpriteContents getFrameCount ()I
+
+accessible field net/minecraft/client/texture/SpriteContents$Animation frames Ljava/util/List;
+accessible field net/minecraft/client/texture/SpriteContents$AnimationFrame index I

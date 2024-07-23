@@ -6,6 +6,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.DiffuseLighting;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.client.render.model.BakedQuad;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.util.math.MatrixStack;
@@ -13,9 +14,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.crash.CrashException;
 import net.minecraft.util.crash.CrashReport;
 import net.minecraft.util.crash.CrashReportSection;
+import net.minecraft.util.math.random.Random;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.List;
 
 import static com.github.jasger9000.textureexportmod.TextureExportMod.LOGGER;
 import static com.github.jasger9000.textureexportmod.TextureExportModClient.client;
@@ -65,6 +68,21 @@ public class Util {
         matrices.pop();
     }
 
+
+    public static int getFrameCount(BakedModel model) {
+        List<BakedQuad> quads = model.getQuads(null, null, Random.create());
+
+        int frameCount = 1;
+        for (BakedQuad quad : quads) {
+            int frames = quad.getSprite().getContents().getFrameCount();
+
+            if (frames > frameCount) {
+                frameCount = frames;
+            }
+        }
+
+        return frameCount;
+    }
 
     public static NativeImage createNativeImage(Framebuffer framebuffer) {
         int i = framebuffer.textureWidth;
