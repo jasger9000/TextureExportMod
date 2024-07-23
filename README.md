@@ -24,6 +24,7 @@ Redistribution, commercial use, or any other unauthorized use of the textures fr
 ## Usage
 
 This mod provides several client side commands:
+- `/openExportScreen` to open a gui screen for easy exporting
 - `/buildItemStack` to build an Item Stack of all the mods you enabled for export
 - `/shouldExportMod <mod> <shouldExport>` Toggles whether the chosen mod will be exported.
   - \<mod\> A Mod id. Example: `minecraft` or `create`
@@ -36,11 +37,11 @@ This mod provides several client side commands:
 
 #### How do I export textures?
 
-You will have to join a world (single- or multiplayer) and execute `/buildItemStack` and then `/startExport`. (you can also stop the export with `/stopExport`) Depending on your system specifications, this could make your game lag a little.
+You will have to join a world (single- or multiplayer) and execute `/openExportScreen`, click the build button and then start exporting using the start button. Depending on your system specifications, this could make your game lag a little.
 
 #### Where are the textures getting exported to?
 
-By default, textures are getting exported to `~/Pictures/textureexportmod/` so if your username is johndoe textures would be located in `/home/johndoe/Pictures/textureexportmod` or `C:\Users\johndoe\Pictures` depending on your Operating System
+By default, textures are getting exported to `~/Pictures/textureexportmod/` so if your username is johndoe textures would be located in `/home/johndoe/Pictures/textureexportmod` or `C:\Users\johndoe\Pictures\textureexportmod` depending on your Operating System
 
 
 ## Contributing
